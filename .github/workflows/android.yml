@@ -24,6 +24,9 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-35 build-tools;35.0.0
+          log-accepted-android-sdk-licenses: false
       - uses: gradle/actions/setup-gradle@v4
       - name: Build debug APK and run JVM unit tests
         run: |
@@ -43,16 +46,7 @@ jobs:
           profile: pixel_6
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: |
-            adb shell locksettings set-pin 1234
-            adb shell settings put system screen_off_timeout 1800000
-            adb shell wm dismiss-keyguard
-            ./gradlew connectedDebugAndroidTest --stacktrace
-      - name: Pull three app screenshots
-        if: always()
-        run: |
-          mkdir -p evidence/screenshots
-          adb pull /sdcard/Android/data/dev.pocketdemo/files/screenshots/. evidence/screenshots/ || true
+          script: bash scripts/run_instrumented.sh
       - name: Record actual XML test counts
         if: always()
         run: python3 scripts/summarize_tests.py --require-complete
@@ -74,6 +68,7 @@ jobs:
             app/build/outputs/androidTest-results/
             evidence/test-summary.json
             evidence/test-summary.md
+            evidence/device-*
       - name: Upload three real emulator screenshots
         if: always()
         uses: actions/upload-artifact@v4
