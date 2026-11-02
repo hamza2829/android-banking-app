@@ -42,7 +42,7 @@ class DeviceCredentialTest {
             device.executeShellCommand("am start -n dev.pocketdemo/.MainActivity")
             compose.waitUntil(10000) { compose.onAllNodesWithTag("unlock").fetchSemanticsNodes().isNotEmpty() }
             compose.onNodeWithTag("unlock").performClick(); enterPin(device)
-            compose.onNodeWithTag("navSettings").assertExists()
+            compose.onNodeWithTag("navSettings").performClick()
             compose.onNodeWithTag("toggleLock").performClick(); enterPin(device)
             compose.onNodeWithText("Enable screen lock").assertExists()
         } finally {
@@ -50,11 +50,11 @@ class DeviceCredentialTest {
         }
     }
     private fun enterPin(device: UiDevice) {
-        val selector = By.res(Pattern.compile(".*:id/(pinEntry|password_entry)"))
+        val selector = By.res(Pattern.compile(".*:id/(lockPassword|pinEntry|password_entry)"))
         val input = device.wait(Until.findObject(selector), 10000)
         assertNotNull("Android credential PIN field must appear", input)
         input.text = "1234"
         device.pressEnter()
-        device.wait(Until.gone(selector), 10000)
+        assertTrue("Correct PIN must dismiss the credential prompt", device.wait(Until.gone(selector), 10000))
     }
 }

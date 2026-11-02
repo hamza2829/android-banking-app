@@ -10,7 +10,7 @@ Account overview and transaction details, an accessible Compose Canvas spending 
 
 ## Results
 
-Verification is in progress. No passing test count or successful CI run is claimed yet. Actual results and emulator screenshots will be recorded here after execution. GitHub Actions publishes the debug APK, original XML/HTML reports, a machine-counted test summary, and three screenshots. Failures remain visible in the run history.
+Verification is in progress. The local JVM suite passed **59/59**. The [first emulator CI run](https://github.com/hamza2829/android-banking-app/actions/runs/41439122629) passed **59/59 JVM tests and 17/18 instrumented tests**, with **1 failed and 0 skipped**. The failure was the test's system PIN-field selector; screenshot export also needed a teardown fix. The corrected suite is being rerun. No successful CI run is claimed yet. See the [verification record](docs/verification.md). GitHub Actions publishes the debug APK, original XML/HTML reports, a machine-counted test summary, and screenshots. Failures remain visible in the run history.
 
 ## How it works
 
@@ -49,7 +49,7 @@ adb shell settings put system screen_off_timeout 1800000
 adb shell wm dismiss-keyguard
 ./gradlew connectedDebugAndroidTest
 mkdir -p evidence/screenshots
-adb pull /sdcard/Android/data/dev.pocketdemo/files/screenshots/. evidence/screenshots/
+adb pull /sdcard/Download/pocket-demo-screenshots/. evidence/screenshots/
 python3 scripts/summarize_tests.py --require-complete
 ```
 

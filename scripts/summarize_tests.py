@@ -29,7 +29,10 @@ for name, directory in groups.items():
 screenshots = sorted(p.name for p in (root / "evidence/screenshots").glob("*.png"))
 output = root / "evidence"
 output.mkdir(exist_ok=True)
-payload = {"suites": summary, "screenshots": screenshots, "run_url": os.getenv("GITHUB_SERVER_URL", "https://github.com") + "/" + os.getenv("GITHUB_REPOSITORY", "local") + "/actions/runs/" + os.getenv("GITHUB_RUN_ID", "local")}
+run_url = None
+if os.getenv("GITHUB_RUN_ID"):
+    run_url = os.getenv("GITHUB_SERVER_URL", "https://github.com") + "/" + os.environ["GITHUB_REPOSITORY"] + "/actions/runs/" + os.environ["GITHUB_RUN_ID"]
+payload = {"suites": summary, "screenshots": screenshots, "run_url": run_url}
 (output / "test-summary.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 lines = ["| Suite | Tests | Passed | Failures | Errors | Skipped |", "|---|---:|---:|---:|---:|---:|"]
 for name, counts in summary.items():

@@ -14,4 +14,7 @@ Only executed JUnit XML testcases count as results. Source annotations and inten
 - Local JVM rerun: **59 passed, 0 failed, 0 errors, 0 skipped**. Debug app and instrumentation APK compile successfully.
 - [First CI run](https://github.com/hamza2829/android-banking-app/actions/runs/41438995817): **failed during SDK setup**, before any tests. The setup action's default package list requested Google's removed `tools` package. The workflow now requests only platform-tools, platform 35, and build-tools 35.0.0. CI counted **0 JVM and 0 instrumented tests**, rather than reusing local counts.
 
+- [First emulator CI run](https://github.com/hamza2829/android-banking-app/actions/runs/41439122629): **59/59 JVM tests passed; 17/18 instrumented tests passed, 1 failed, 0 skipped**. The real BiometricPrompt appeared, but the test expected `pinEntry`/`password_entry`; API 34's logcat identified its field as `lockPassword`. Added that system resource ID and explicit navigation after resuming. The screenshot test passed, but AGP's `uninstall_after_test: true` deleted its app-private files; the test now exports synthetic screenshots to the emulator Downloads folder before teardown and verifies the files exist. This run failed and had no screenshot artifact.
+- Offline merged-release-manifest check passed: no INTERNET permission is present.
+
 Final CI results and emulator screenshots are pending.

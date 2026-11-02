@@ -5,7 +5,7 @@ set -euo pipefail
 collect_evidence() {
   local result=$?
   mkdir -p evidence/screenshots
-  adb pull /sdcard/Android/data/dev.pocketdemo/files/screenshots/. evidence/screenshots/ || true
+  adb pull /sdcard/Download/pocket-demo-screenshots/. evidence/screenshots/ || true
   if [ "$result" -ne 0 ]; then
     adb logcat -d -t 1500 > evidence/device-logcat.txt || true
     adb shell uiautomator dump /sdcard/failure-window.xml || true
