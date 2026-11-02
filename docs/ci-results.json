@@ -1,0 +1,26 @@
+{
+  "suites": {
+    "jvm": {
+      "tests": 59,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 59,
+      "xml_files": 7
+    },
+    "instrumented": {
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 18,
+      "xml_files": 1
+    }
+  },
+  "screenshots": [
+    "overview.png",
+    "spending.png",
+    "transfer.png"
+  ],
+  "run_url": "https://github.com/hamza2829/android-banking-app/actions/runs/41440307570"
+}

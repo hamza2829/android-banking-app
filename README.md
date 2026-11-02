@@ -10,7 +10,23 @@ Account overview and transaction details, an accessible Compose Canvas spending 
 
 ## Results
 
-Verification is in progress. The local JVM suite passed **59/59**. The [first emulator CI run](https://github.com/hamza2829/android-banking-app/actions/runs/41439122629) passed **59/59 JVM tests and 17/18 instrumented tests**, with **1 failed and 0 skipped**. The failure was the test's system PIN-field selector; screenshot export also needed a teardown fix. The corrected suite is being rerun. No successful CI run is claimed yet. See the [verification record](docs/verification.md). GitHub Actions publishes the debug APK, original XML/HTML reports, a machine-counted test summary, and screenshots. Failures remain visible in the run history.
+**[CI passed on 2 November 2026](https://github.com/hamza2829/android-banking-app/actions/runs/41440307570)** for code commit [`bd92182`](https://github.com/hamza2829/android-banking-app/commit/bd92182aac57989af3d75d11ecb7591dc44e98d6), using Java 17 and an Android API 34 emulator. Subsequent documentation changes add these results and screenshots.
+
+| Executed suite | Passed / total | Failed | Errors | Skipped |
+|---|---:|---:|---:|---:|
+| JVM unit tests | 59 / 59 | 0 | 0 | 0 |
+| Android instrumented tests | 18 / 18 | 0 | 0 | 0 |
+| **Total** | **77 / 77** | **0** | **0** | **0** |
+
+Counts come from the run's original JUnit XML, summarized by [this script](scripts/summarize_tests.py). The [saved JSON summary](docs/ci-results.json) matches the artifact. The real device-PIN BiometricPrompt enable/unlock/disable and background-lock flow passed; fingerprint/face sensor success was not tested.
+
+Download `debug-apk`, `test-reports`, and `screenshots-api34` from the [successful run's artifacts](https://github.com/hamza2829/android-banking-app/actions/runs/41440307570#artifacts). There are exactly **3 screenshots**, captured from the running app on the emulator and visually inspected; these are not mockups.
+
+| Account overview | Spending summary | Transfer form |
+|---|---|---|
+| <img src="docs/screenshots/overview.png" width="250" alt="Synthetic account overview with local demo label, balance and transaction list"> | <img src="docs/screenshots/spending.png" width="250" alt="Compose spending chart and category totals"> | <img src="docs/screenshots/transfer.png" width="250" alt="Local demo transfer form with recipient, IBAN, amount and reference fields"> |
+
+Earlier failures are retained in the [verification record](docs/verification.md): local unit tests initially had **2 failures out of 59**, one CI run failed before tests during SDK setup, and the first emulator run had **1 failure out of 18** plus missing screenshot export. All were corrected before the successful run above. No failures or skipped tests remain in that run.
 
 ## How it works
 
